@@ -398,7 +398,7 @@ function selectAnswer(letter, btn) {
   
   if(btn) btn.classList.add('selected');
   const fb = document.getElementById('feedback');
-  fb.textContent = isCorrect ? "😊 Chính xác!" : "😢 Sai rồi! Đáp án là " + correctLetter;
+  fb.textContent = isCorrect ? "😊 Chính xác!" : "😢 Sai rồi!;
   fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
   document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
   document.getElementById('btn-next').style.display = 'block';
