@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz – Unit 3 | Grade 10</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #c084fc;
+    --pink: #f472b6;
+    --blue: #60a5fa;
+    --yellow: #fde68a;
+    --mint: #6ee7b7;
+    --bg: #fdf4ff;
+    --card: #ffffff;
+    --text: #3b2468;
+    --subtext: #7c5cbf;
+    --radius: 24px;
+    --shadow: 0 8px 40px rgba(160,100,220,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Animated background blobs */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite alternate;
+  }
+  body::before {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #e879f9, #a78bfa);
+    top: -150px; left: -150px;
+  }
+  body::after {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, #60a5fa, #34d399);
+    bottom: -100px; right: -100px;
+    animation-delay: -4s;
+  }
+
+  @keyframes float {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(40px, 30px) scale(1.08); }
+  }
+
+  /* Sparkles */
+  .sparkle {
+    position: fixed;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  /* Card */
+  .card {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), 0 0 0 1.5px rgba(192,132,252,0.18);
+    padding: 48px 44px;
+    max-width: 600px;
+    width: 94vw;
+    position: relative;
+    z-index: 10;
+    animation: slideUp 0.5s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ---- START SCREEN ---- */
+  #start-screen { text-align: center; }
+  .logo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #c084fc, #f472b6);
+    color: #fff;
+    font-family: 'Baloo 2', cursive;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 5px 18px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  h1.title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a855f7, #ec4899, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .subtitle {
+    color: var(--subtext);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 36px;
+  }
+
+  .input-group { position: relative; margin-bottom: 24px; }
+  .input-group label {
+    display: block;
+    font-weight: 700;
+    color: var(--subtext);
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-align: left;
+  }
+  .input-group input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid #e9d5ff;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    background: rgba(255,255,255,0.9);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-group input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 4px rgba(192,132,252,0.15);
+  }
+  .input-group input::placeholder { color: #c4b5fd; font-weight: 600; }
+
+  .btn-start {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 24px rgba(168,85,247,0.35);
+    letter-spacing: 0.5px;
+  }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(168,85,247,0.45); }
+  .btn-start:active { transform: scale(0.98); }
+
+  .info-chips {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    color: var(--subtext);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 100px;
+    border: 1px solid #e9d5ff;
+  }
+
+  /* ---- QUIZ SCREEN ---- */
+  #quiz-screen { display: none; }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .student-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--subtext);
+    background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+  .q-counter {
+    font-family: 'Baloo 2', cursive;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--subtext);
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: #ede9fe;
+    border-radius: 100px;
+    height: 10px;
+    margin-bottom: 22px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #a855f7, #ec4899, #60a5fa);
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(.34,1.56,.64,1);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Timer */
+  .timer-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    gap: 10px;
+  }
+  .timer-ring {
+    position: relative;
+    width: 54px; height: 54px;
+  }
+  .timer-ring svg { transform: rotate(-90deg); }
+  .timer-ring circle {
+    fill: none;
+    stroke: #ede9fe;
+    stroke-width: 4;
+  }
+  .timer-ring .arc {
+    stroke: #a855f7;
+    stroke-dasharray: 138;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s;
+  }
+  .timer-ring .arc.urgent { stroke: #f472b6; }
+  .timer-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .timer-label { font-size: 13px; font-weight: 700; color: var(--subtext); }
+
+  /* Question */
+  .question-block {
+    background: linear-gradient(135deg, #f5f3ff, #fdf2f8);
+    border-radius: 18px;
+    padding: 20px 22px;
+    margin-bottom: 22px;
+    border: 1.5px solid #e9d5ff;
+  }
+  .question-type-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #a855f7;
+    background: rgba(168,85,247,0.1);
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+  }
+  .question-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* Options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
+
+  .option-btn {
+    padding: 13px 16px;
+    border: 2px solid #e9d5ff;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.85);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .option-letter {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; color: #a855f7;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--purple);
+    background: linear-gradient(135deg, #f5f3ff, #fdf2f8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(168,85,247,0.15);
+  }
+  .option-btn:hover:not(:disabled) .option-letter {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+  }
+  .option-btn.selected {
+    border-color: #a855f7;
+    background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    box-shadow: 0 4px 16px rgba(168,85,247,0.2);
+  }
+  .option-btn.selected .option-letter {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+  }
+  .option-btn:disabled { cursor: default; }
+
+  /* Feedback */
+  .feedback {
+    text-align: center;
+    font-family: 'Baloo 2', cursive;
+    font-size: 24px;
+    font-weight: 800;
+    padding: 10px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s, transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .feedback.show { opacity: 1; transform: scale(1); }
+  .feedback.correct { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; }
+  .feedback.wrong   { background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d; }
+
+  .btn-next {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+    font-family: 'Baloo 2', cursive;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, opacity 0.2s;
+    box-shadow: 0 6px 20px rgba(168,85,247,0.3);
+    display: none;
+  }
+  .btn-next.show { display: block; }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(168,85,247,0.4); }
+
+  /* ---- RESULT SCREEN ---- */
+  #result-screen { display: none; text-align: center; }
+  .result-emoji { font-size: 72px; margin-bottom: 10px; animation: bounce 0.6s ease; }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+  }
+  .result-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a855f7, #ec4899, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .result-name { color: var(--subtext); font-weight: 700; font-size: 15px; margin-bottom: 28px; }
+
+  .score-card {
+    background: linear-gradient(135deg, #fdf4ff, #fce7f3);
+    border: 2px solid #e9d5ff;
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .score-main {
+    font-family: 'Baloo 2', cursive;
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .score-scale { font-size: 20px; color: var(--subtext); font-weight: 700; margin-top: 4px; margin-bottom: 16px; }
+  .score-detail { font-size: 15px; font-weight: 700; color: var(--subtext); }
+  .score-detail span { color: var(--text); }
+
+  .praise {
+    background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    border-radius: 16px;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .btn-retry {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+    font-family: 'Baloo 2', cursive;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 20px rgba(168,85,247,0.3);
+  }
+  .btn-retry:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(168,85,247,0.4); }
+
+  /* Screen transitions */
+  .screen { transition: opacity 0.3s ease; }
+
+  /* Confetti particle */
+  .confetti-piece {
+    position: fixed;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  @media (max-width: 520px) {
+    .card { padding: 28px 18px; }
+    h1.title { font-size: 1.7rem; }
+    .score-main { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sparkles -->
+<script>
+  const colors = ['#c084fc','#f472b6','#60a5fa','#fde68a','#6ee7b7'];
+  for(let i=0;i<16;i++){
+    const s=document.createElement('div');
+    s.className='sparkle';
+    s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;background:${colors[i%colors.length]};animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s`;
+    document.body.appendChild(s);
+  }
+</script>
+
+<div class="card" id="app">
+
+  <!-- START -->
+  <div id="start-screen" class="screen">
+    <div class="logo-badge">Grade 10 · Unit 3</div>
+    <h1 class="title">International<br>Organisations 🌍</h1>
+    <p class="subtitle">Kiểm tra từ vựng & ngữ pháp</p>
+    <div class="input-group">
+      <label for="name-input">✏️ Tên học sinh của bạn</label>
+      <input type="text" id="name-input" placeholder="Nhập tên bạn vào đây..." maxlength="40" autocomplete="off">
+    </div>
+    <button class="btn-start" onclick="startQuiz()">🚀 Bắt đầu làm bài!</button>
+    <div class="info-chips">
+      <span class="chip">📝 40 câu hỏi</span>
+      <span class="chip">⏱️ 15 giây / câu</span>
+      <span class="chip">🔀 Xáo trộn ngẫu nhiên</span>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz-screen" class="screen">
+    <div class="quiz-header">
+      <div class="student-name" id="display-name">Học sinh</div>
+      <div class="q-counter"><span id="q-current">1</span> / <span id="q-total">40</span></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+    <div class="timer-wrap">
+      <div class="timer-ring">
+        <svg viewBox="0 0 54 54" width="54" height="54">
+          <circle cx="27" cy="27" r="22"/>
+          <circle class="arc" id="timer-arc" cx="27" cy="27" r="22"/>
+        </svg>
+        <div class="timer-num" id="timer-num">15</div>
+      </div>
+      <span class="timer-label">giây còn lại</span>
+    </div>
+    <div class="question-block">
+      <div class="question-type-tag">Trắc nghiệm</div>
+      <div class="question-text" id="question-text"></div>
+    </div>
+    <div class="options-grid" id="options-grid"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Tiếp tục →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result-screen" class="screen">
+    <div class="result-emoji" id="result-emoji">🎉</div>
+    <div class="result-title">Kết quả bài thi</div>
+    <div class="result-name" id="result-name"></div>
+    <div class="score-card">
+      <div class="score-main" id="score-main">0</div>
+      <div class="score-scale">/ 10 điểm</div>
+      <div class="score-detail">Số câu đúng: <span id="score-correct">0</span> / <span id="score-total">40</span></div>
+    </div>
+    <div class="praise" id="praise-text"></div>
+    <button class="btn-retry" onclick="resetQuiz()">🔄 Làm lại bài</button>
+  </div>
+
+</div>
+
+<script>
+// ===================== DATA =====================
+const RAW_QUESTIONS = [
+  {q:"Choose the word whose underlined part differs. (chữ e)",opts:["trade","dentist","economic","danger"],ans:"B"},
+  {q:"Choose the word whose underlined part differs. (chữ ch)",opts:["charity","chemistry","chaos","chair"],ans:"B"},
+  {q:"Choose the word with different stress.",opts:["economic","quality","independent","regional"],ans:"A"},
+  {q:"Choose the word with different stress.",opts:["investor","environment","international","economic"],ans:"A"},
+  {q:"Viet Nam is a member of many international ______.",opts:["businesses","communities","programmes","organisations"],ans:"D"},
+  {q:"UNICEF has helped many ______ teenagers.",opts:["active","advantaged","disadvantaged","talented"],ans:"C"},
+  {q:"Viet Nam has participated ______ many UN activities.",opts:["in","on","for","with"],ans:"A"},
+  {q:"UNICEF's aim is to protect children and ______ they are healthy.",opts:["make sure","do sure","give sure","show sure"],ans:"A"},
+  {q:"The WTO is the world's largest international ______ organisation.",opts:["economy","economic","economical","economist"],ans:"B"},
+  {q:"Joining the WTO has helped Viet Nam ______ its economic growth.",opts:["provide","promote","prevent","predict"],ans:"B"},
+  {q:"The ______ accident occurred last night.",opts:["badest","most bad","worse","worst"],ans:"D"},
+  {q:"We ______ to use donations effectively.",opts:["comment","accept","commit","preserve"],ans:"C"},
+  {q:"This organisation ______ to protect forests.",opts:["rises","bombs","aims","spreads"],ans:"C"},
+  {q:"The United Nations ______ in 1945.",opts:["create","created","was created","to create"],ans:"C"},
+  {q:"UN Peacekeeping aims ______ countries affected by war.",opts:["help","to help","helping","helps"],ans:"B"},
+  {q:"Through ______ activities, Viet Nam helped achieve peace.",opts:["interesting","peacekeeping","exciting","influencing"],ans:"B"},
+  {q:"Goods can ______ new markets.",opts:["enter","entering","to enter","enters"],ans:"A"},
+  {q:"Children have a chance to ______ education.",opts:["get used to","get on with","get acquainted with","get access to"],ans:"D"},
+  {q:"The programme promotes equal ______.",opts:["participate","participant","participation","participating"],ans:"C"},
+  {q:"Viet Nam ______ foreign investors.",opts:["expresses","welcomes","hesitates","promotes"],ans:"B"},
+  {q:"The Red Cross's main ______ is protection.",opts:["mission","experience","organization","rule"],ans:"A"},
+  {q:"People choose ______ time for important things.",opts:["better","less good","the least good","the best"],ans:"D"},
+  {q:"The organisation relieves human ______.",opts:["protection","enjoyment","wealthy","sufferings"],ans:"D"},
+  {q:"Many people live in absolute ______.",opts:["poor","poorer","poorly","poverty"],ans:"D"},
+  {q:"Mary speaks English very ______.",opts:["fluent","fluently","more fluently","most fluently"],ans:"B"},
+  {q:"The purpose of international organisations is ______.",opts:["keep world safe","isolate countries","cause wars","none"],ans:"A"},
+  {q:"International cooperation maintains global ______.",opts:["peace","war","conflict","damage"],ans:"A"},
+  {q:"Education improves living ______.",opts:["standards","dangers","missions","poverty"],ans:"A"},
+  {q:"Organisations promote ______ development.",opts:["sustainable","dangerous","temporary","local"],ans:"A"},
+  {q:"Countries solve ______ problems together.",opts:["global","private","personal","small"],ans:"A"},
+  {q:"Aid helps people in ______.",opts:["need","wealth","comfort","luxury"],ans:"A"},
+  {q:"UNICEF focuses on children's ______.",opts:["rights","weapons","conflicts","trade"],ans:"A"},
+  {q:"Economic growth creates more ______.",opts:["jobs","wars","diseases","risks"],ans:"A"},
+  {q:"Peacekeeping forces stop ______.",opts:["violence","learning","growth","study"],ans:"A"},
+  {q:"International trade boosts the ______.",opts:["economy","poverty","conflict","danger"],ans:"A"},
+  {q:"Countries cooperate for mutual ______.",opts:["benefit","loss","fight","damage"],ans:"A"},
+  {q:"Global cooperation reduces ______.",opts:["poverty","education","health","culture"],ans:"A"},
+  {q:"Aid programmes support ______ communities.",opts:["disadvantaged","wealthy","modern","private"],ans:"A"},
+  {q:"Education gives better ______.",opts:["opportunities","wars","losses","risks"],ans:"A"},
+  {q:"International law maintains world ______.",opts:["order","chaos","violence","damage"],ans:"A"},
+];
+
+const LETTERS = ['A','B','C','D'];
+
+// ===================== STATE =====================
+let studentName = '';
+let questions = [];
+let currentIdx = 0;
+let score = 0;
+let timer = null;
+let timeLeft = 15;
+let answered = false;
+const TOTAL_TIME = 15;
+
+// ===================== HELPERS =====================
+function shuffle(arr) {
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function prepareQuestions() {
+  return shuffle(RAW_QUESTIONS).map(q => {
+    const originalOpts = q.opts;
+    const correctText = originalOpts[LETTERS.indexOf(q.ans)];
+    const shuffledOpts = shuffle([...originalOpts]);
+    const newAns = LETTERS[shuffledOpts.indexOf(correctText)];
+    return { q: q.q, opts: shuffledOpts, ans: newAns };
+  });
+}
+
+// ===================== SCREENS =====================
+function showScreen(id) {
+  ['start-screen','quiz-screen','result-screen'].forEach(s => {
+    const el = document.getElementById(s);
+    el.style.display = 'none';
+  });
+  document.getElementById(id).style.display = 'block';
+}
+
+function startQuiz() {
+  const input = document.getElementById('name-input').value.trim();
+  if(!input) {
+    document.getElementById('name-input').focus();
+    document.getElementById('name-input').style.borderColor = '#f472b6';
+    setTimeout(() => document.getElementById('name-input').style.borderColor = '#e9d5ff', 1500);
+    return;
+  }
+  studentName = input;
+  questions = prepareQuestions();
+  currentIdx = 0;
+  score = 0;
+  document.getElementById('q-total').textContent = questions.length;
+  document.getElementById('display-name').textContent = '👤 ' + studentName;
+  showScreen('quiz-screen');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  answered = false;
+  const q = questions[currentIdx];
+  document.getElementById('q-current').textContent = currentIdx + 1;
+
+  // Progress
+  const pct = (currentIdx / questions.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  // Question
+  document.getElementById('question-text').textContent = (currentIdx+1) + '. ' + q.q;
+
+  // Options
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${LETTERS[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(LETTERS[i], btn);
+    grid.appendChild(btn);
+  });
+
+  // Feedback & next
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.textContent = '';
+  const nb = document.getElementById('btn-next');
+  nb.className = 'btn-next';
+
+  // Timer
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = TOTAL_TIME;
+  updateTimerUI(timeLeft);
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerUI(timeLeft);
+    if(timeLeft <= 0) {
+      clearInterval(timer);
+      if(!answered) autoSubmit();
+    }
+  }, 1000);
+}
+
+function updateTimerUI(t) {
+  document.getElementById('timer-num').textContent = t;
+  const arc = document.getElementById('timer-arc');
+  const circumference = 2 * Math.PI * 22; // 138.2
+  const offset = circumference * (1 - t / TOTAL_TIME);
+  arc.style.strokeDashoffset = offset;
+  arc.style.strokeDasharray = circumference;
+  if(t <= 5) arc.classList.add('urgent');
+  else arc.classList.remove('urgent');
+}
+
+function autoSubmit() {
+  answered = true;
+  // disable all options
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  showFeedback(false);
+  document.getElementById('btn-next').classList.add('show');
+}
+
+function selectAnswer(letter, btn) {
+  if(answered) return;
+  answered = true;
+  clearInterval(timer);
+
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  btn.classList.add('selected');
+
+  const correct = questions[currentIdx].ans === letter;
+  if(correct) score++;
+  showFeedback(correct);
+  document.getElementById('btn-next').classList.add('show');
+}
+
+function showFeedback(correct) {
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+  fb.textContent = correct ? '😊 Chính xác! Tuyệt vời!' : '😢 Chưa đúng rồi!';
+  requestAnimationFrame(() => { fb.classList.add('show'); });
+}
+
+function nextQuestion() {
+  currentIdx++;
+  if(currentIdx >= questions.length) {
+    showResult();
+  } else {
+    // animate card
+    const card = document.querySelector('.question-block');
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(20px)';
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.25s, transform 0.25s';
+      card.style.opacity = '1';
+      card.style.transform = 'translateX(0)';
+    }, 10);
+    loadQuestion();
+  }
+}
+
+// ===================== RESULT =====================
+function showResult() {
+  clearInterval(timer);
+  document.getElementById('progress-bar').style.width = '100%';
+
+  const pct = score / questions.length;
+  const score10 = (pct * 10).toFixed(1);
+
+  document.getElementById('result-name').textContent = '👤 ' + studentName;
+  document.getElementById('score-main').textContent = score10;
+  document.getElementById('score-correct').textContent = score;
+  document.getElementById('score-total').textContent = questions.length;
+
+  let emoji, praise;
+  if(pct >= 0.9)      { emoji='🏆'; praise='Xuất sắc! Bạn thật tuyệt vời! Hãy tiếp tục phát huy nhé! 🌟'; }
+  else if(pct >= 0.7) { emoji='🎉'; praise='Giỏi lắm! Kết quả rất tốt! Ôn thêm một chút là hoàn hảo rồi! 💪'; }
+  else if(pct >= 0.5) { emoji='😊'; praise='Cố lên nào! Bạn đã làm được hơn nửa bài rồi! Ôn thêm nhé! 📚'; }
+  else                { emoji='💪'; praise='Đừng nản lòng! Thử lại và bạn sẽ tiến bộ hơn nhiều! Cố lên! ✨'; }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('praise-text').textContent = praise;
+
+  showScreen('result-screen');
+  if(pct >= 0.5) launchConfetti();
+}
+
+function launchConfetti() {
+  const colors = ['#c084fc','#f472b6','#60a5fa','#fde68a','#6ee7b7','#fb923c'];
+  for(let i=0;i<60;i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.cssText = `
+        left:${Math.random()*100}vw;
+        top:0;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        width:${6+Math.random()*8}px;
+        height:${6+Math.random()*8}px;
+        border-radius:${Math.random()>0.5?'50%':'2px'};
+        animation-duration:${2+Math.random()*2}s;
+        animation-delay:${Math.random()*0.5}s;
+      `;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }, i*30);
+  }
+}
+
+function resetQuiz() {
+  document.getElementById('name-input').value = '';
+  showScreen('start-screen');
+}
+
+// Init
+showScreen('start-screen');
+</script>
+</body>
+</html>
