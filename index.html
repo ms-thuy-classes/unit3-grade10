@@ -27,12 +27,10 @@
     background: var(--bg);
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     position: relative;
-    padding: 32px 16px 48px;
   }
 
   /* Animated background blobs */
@@ -82,8 +80,8 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow), 0 0 0 1.5px rgba(192,132,252,0.18);
     padding: 48px 44px;
-    max-width: 620px;
-    width: 100%;
+    max-width: 600px;
+    width: 94vw;
     position: relative;
     z-index: 10;
     animation: slideUp 0.5s cubic-bezier(.34,1.56,.64,1) both;
@@ -110,7 +108,7 @@
   }
   h1.title {
     font-family: 'Baloo 2', cursive;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
     background: linear-gradient(135deg, #a855f7, #ec4899, #3b82f6);
     -webkit-background-clip: text;
@@ -121,7 +119,7 @@
   }
   .subtitle {
     color: var(--subtext);
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 36px;
   }
@@ -131,7 +129,7 @@
     display: block;
     font-weight: 700;
     color: var(--subtext);
-    font-size: 15px;
+    font-size: 14px;
     margin-bottom: 8px;
     text-align: left;
   }
@@ -141,7 +139,7 @@
     border: 2px solid #e9d5ff;
     border-radius: 14px;
     font-family: 'Nunito', sans-serif;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--text);
     background: rgba(255,255,255,0.9);
@@ -162,7 +160,7 @@
     background: linear-gradient(135deg, #a855f7, #ec4899);
     color: #fff;
     font-family: 'Baloo 2', cursive;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     cursor: pointer;
     transition: transform 0.18s, box-shadow 0.18s;
@@ -182,9 +180,9 @@
   .chip {
     background: linear-gradient(135deg, #ede9fe, #fce7f3);
     color: var(--subtext);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    padding: 6px 16px;
+    padding: 5px 14px;
     border-radius: 100px;
     border: 1px solid #e9d5ff;
   }
@@ -199,16 +197,16 @@
     margin-bottom: 18px;
   }
   .student-name {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--subtext);
     background: linear-gradient(135deg, #ede9fe, #fce7f3);
-    padding: 5px 14px;
+    padding: 4px 12px;
     border-radius: 100px;
   }
   .q-counter {
     font-family: 'Baloo 2', cursive;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 800;
     color: var(--subtext);
   }
@@ -284,7 +282,7 @@
   }
   .question-type-tag {
     display: inline-block;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -295,10 +293,10 @@
     margin-bottom: 10px;
   }
   .question-text {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--text);
-    line-height: 1.65;
+    line-height: 1.6;
   }
 
   /* Options */
@@ -311,12 +309,12 @@
   @media (max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
 
   .option-btn {
-    padding: 14px 16px;
+    padding: 13px 16px;
     border: 2px solid #e9d5ff;
     border-radius: 14px;
     background: rgba(255,255,255,0.85);
     font-family: 'Nunito', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--text);
     cursor: pointer;
@@ -329,11 +327,11 @@
     gap: 10px;
   }
   .option-letter {
-    width: 30px; height: 30px;
+    width: 26px; height: 26px;
     border-radius: 8px;
     background: linear-gradient(135deg, #ede9fe, #fce7f3);
     display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 800; color: #a855f7;
+    font-size: 12px; font-weight: 800; color: #a855f7;
     flex-shrink: 0;
     transition: all 0.2s;
   }
@@ -362,7 +360,7 @@
   .feedback {
     text-align: center;
     font-family: 'Baloo 2', cursive;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 800;
     padding: 10px;
     border-radius: 14px;
@@ -375,23 +373,29 @@
   .feedback.correct { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; }
   .feedback.wrong   { background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d; }
 
-  .btn-next {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #a855f7, #ec4899);
-    color: #fff;
+  .btn-next { display: none !important; }
+
+  /* Auto-advance countdown */
+  .auto-next {
+    text-align: center;
     font-family: 'Baloo 2', cursive;
-    font-size: 18px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: transform 0.18s, box-shadow 0.18s, opacity 0.2s;
-    box-shadow: 0 6px 20px rgba(168,85,247,0.3);
-    display: none;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--subtext);
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.4s;
   }
-  .btn-next.show { display: block; }
-  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(168,85,247,0.4); }
+  .auto-next.show { opacity: 1; }
+  .auto-next .countdown-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    border-radius: 100px;
+    padding: 3px 14px;
+    color: #a855f7;
+    font-size: 17px;
+    min-width: 32px;
+  }
 
   /* ---- RESULT SCREEN ---- */
   #result-screen { display: none; text-align: center; }
@@ -402,7 +406,7 @@
   }
   .result-title {
     font-family: 'Baloo 2', cursive;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     background: linear-gradient(135deg, #a855f7, #ec4899, #3b82f6);
     -webkit-background-clip: text;
@@ -410,7 +414,7 @@
     background-clip: text;
     margin-bottom: 6px;
   }
-  .result-name { color: var(--subtext); font-weight: 700; font-size: 16px; margin-bottom: 28px; }
+  .result-name { color: var(--subtext); font-weight: 700; font-size: 15px; margin-bottom: 28px; }
 
   .score-card {
     background: linear-gradient(135deg, #fdf4ff, #fce7f3);
@@ -429,19 +433,19 @@
     background-clip: text;
     line-height: 1;
   }
-  .score-scale { font-size: 22px; color: var(--subtext); font-weight: 700; margin-top: 4px; margin-bottom: 16px; }
-  .score-detail { font-size: 16px; font-weight: 700; color: var(--subtext); }
+  .score-scale { font-size: 20px; color: var(--subtext); font-weight: 700; margin-top: 4px; margin-bottom: 16px; }
+  .score-detail { font-size: 15px; font-weight: 700; color: var(--subtext); }
   .score-detail span { color: var(--text); }
 
   .praise {
     background: linear-gradient(135deg, #ede9fe, #fce7f3);
     border-radius: 16px;
     padding: 16px 20px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text);
     margin-bottom: 24px;
-    line-height: 1.6;
+    line-height: 1.5;
   }
 
   .btn-retry {
@@ -452,7 +456,7 @@
     background: linear-gradient(135deg, #a855f7, #ec4899);
     color: #fff;
     font-family: 'Baloo 2', cursive;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 800;
     cursor: pointer;
     transition: transform 0.18s, box-shadow 0.18s;
@@ -479,10 +483,8 @@
 
   @media (max-width: 520px) {
     .card { padding: 28px 18px; }
-    h1.title { font-size: 1.9rem; }
-    .score-main { font-size: 3rem; }
-    .question-text { font-size: 16px; }
-    .option-btn { font-size: 14px; }
+    h1.title { font-size: 1.7rem; }
+    .score-main { font-size: 2.8rem; }
   }
 </style>
 </head>
@@ -543,7 +545,8 @@
     </div>
     <div class="options-grid" id="options-grid"></div>
     <div class="feedback" id="feedback"></div>
-    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Tiếp tục →</button>
+    <div class="auto-next" id="auto-next">Tự động chuyển sau <span class="countdown-badge" id="auto-count">3</span> giây...</div>
+    <button class="btn-next" id="btn-next">Tiếp tục →</button>
   </div>
 
   <!-- RESULT -->
@@ -565,8 +568,8 @@
 <script>
 // ===================== DATA =====================
 const RAW_QUESTIONS = [
-  {q:"Choose the word whose underlined part differs. (chữ e) ",opts:["trade","dentist","economic","danger"],ans:"B"},
-  {q:"Choose the word whose underlined part differs. (chữ ch) ",opts:["charity","chemistry","chaos","chair"],ans:"B"},
+  {q:"Choose the word whose underlined part differs.",opts:["trade","dentist","economic","danger"],ans:"B"},
+  {q:"Choose the word whose underlined part differs.",opts:["charity","chemistry","chaos","chair"],ans:"B"},
   {q:"Choose the word with different stress.",opts:["economic","quality","independent","regional"],ans:"A"},
   {q:"Choose the word with different stress.",opts:["investor","environment","international","economic"],ans:"A"},
   {q:"Viet Nam is a member of many international ______.",opts:["businesses","communities","programmes","organisations"],ans:"D"},
@@ -615,9 +618,11 @@ let questions = [];
 let currentIdx = 0;
 let score = 0;
 let timer = null;
+let autoAdvanceTimer = null;
 let timeLeft = 15;
 let answered = false;
 const TOTAL_TIME = 15;
+const AUTO_ADVANCE_DELAY = 3;
 
 // ===================== HELPERS =====================
 function shuffle(arr) {
@@ -668,6 +673,7 @@ function startQuiz() {
 
 function loadQuestion() {
   answered = false;
+  clearTimeout(autoAdvanceTimer);
   window.scrollTo({ top: 0, behavior: 'smooth' });
   const q = questions[currentIdx];
   document.getElementById('q-current').textContent = currentIdx + 1;
@@ -694,6 +700,11 @@ function loadQuestion() {
   const fb = document.getElementById('feedback');
   fb.className = 'feedback';
   fb.textContent = '';
+
+  // Reset auto-next
+  const an = document.getElementById('auto-next');
+  an.className = 'auto-next';
+  document.getElementById('auto-count').textContent = AUTO_ADVANCE_DELAY;
   const nb = document.getElementById('btn-next');
   nb.className = 'btn-next';
 
@@ -728,10 +739,9 @@ function updateTimerUI(t) {
 
 function autoSubmit() {
   answered = true;
-  // disable all options
   document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
   showFeedback(false);
-  document.getElementById('btn-next').classList.add('show');
+  startAutoAdvance();
 }
 
 function selectAnswer(letter, btn) {
@@ -745,7 +755,7 @@ function selectAnswer(letter, btn) {
   const correct = questions[currentIdx].ans === letter;
   if(correct) score++;
   showFeedback(correct);
-  document.getElementById('btn-next').classList.add('show');
+  startAutoAdvance();
 }
 
 function showFeedback(correct) {
@@ -753,6 +763,23 @@ function showFeedback(correct) {
   fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
   fb.textContent = correct ? '😊 Chính xác! Tuyệt vời!' : '😢 Chưa đúng rồi!';
   requestAnimationFrame(() => { fb.classList.add('show'); });
+}
+
+function startAutoAdvance() {
+  const an = document.getElementById('auto-next');
+  const countEl = document.getElementById('auto-count');
+  let count = AUTO_ADVANCE_DELAY;
+  countEl.textContent = count;
+  requestAnimationFrame(() => an.classList.add('show'));
+
+  autoAdvanceTimer = setInterval(() => {
+    count--;
+    countEl.textContent = count;
+    if(count <= 0) {
+      clearInterval(autoAdvanceTimer);
+      nextQuestion();
+    }
+  }, 1000);
 }
 
 function nextQuestion() {
@@ -776,7 +803,6 @@ function nextQuestion() {
 // ===================== RESULT =====================
 function showResult() {
   clearInterval(timer);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   document.getElementById('progress-bar').style.width = '100%';
 
   const pct = score / questions.length;
